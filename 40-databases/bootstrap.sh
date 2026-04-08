@@ -31,4 +31,4 @@ else
 fi
 
 # Run the Ansible playbook
-ansible-playbook -e component=${component} -e environment=${environment} main.yaml &>> /var/log/roboshop/ansible.log 
+ansible-playbook -e component=${component} -e env=${environment} main.yaml &>> /var/log/roboshop/ansible.log 
