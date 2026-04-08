@@ -127,6 +127,7 @@ resource "aws_instance" "mysql" {
   instance_type = "t3.micro"
   vpc_security_group_ids = [local.mysql_sg_id]
   subnet_id = local.database_subnet_ids
+  iam_instance_profile = aws_iam_instance_profile.msql.name
 
   tags = merge (
     local.common_tags,
@@ -134,6 +135,11 @@ resource "aws_instance" "mysql" {
         Name = "${local.common_name_suffix}-mysql" # roboshop-dev-mysql     
     }
   )
+}
+
+resource "aws_iam_instance_profile" "msql" {
+  name = "${local.common_name_suffix}-mysql-iam-profile" # roboshop-dev-mysql-iam-profile
+  role = "EC2SSMParameterRead" # this role has permission to read SSM parameters, which is required for the mysql instance to read the database password from SSM parameter store
 }
 
 resource "terraform_data" "mysql" {
@@ -157,7 +163,7 @@ resource "terraform_data" "mysql" {
     provisioner "remote-exec" {
       inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mysql"
+        "sudo sh /tmp/bootstrap.sh mysql dev"
        ]
     }
   
