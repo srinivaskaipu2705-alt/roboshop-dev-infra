@@ -156,7 +156,7 @@ resource "terraform_data" "mysql" {
 
     # terraform copies this file to mysql instance and then executes it
     provisioner "file" {
-      source = "bootstrap.sh"
+      source = "${path.module}/bootstrap.sh"
       destination = "/tmp/bootstrap.sh"
     }
 
