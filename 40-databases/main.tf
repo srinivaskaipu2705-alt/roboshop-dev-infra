@@ -163,7 +163,7 @@ resource "terraform_data" "mysql" {
     provisioner "remote-exec" {
       inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh /tmp/bootstrap.sh mysql dev"
+        "sudo sh -x /tmp/bootstrap.sh mysql dev" #_-x is used to print the commands being executed, which is helpful for debugging
        ]
     }
   
