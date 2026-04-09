@@ -17,9 +17,10 @@ ANSIBLE_DIR=ansible-roboshop-roles-tf
 # Install Ansible
 mkdir -p $REPO_DIR
 mkdir -p /var/log/roboshop/
-touch ansible.log
+touch /var/log/roboshop/ansible.log
 
-cd $REPO_DIR/$ANSIBLE_DIR
+#go to the base directory where the repository will be cloned
+cd $REPO_DIR
 
 # check if the repository is already cloned
 if [ ! -d "$ANSIBLE_DIR" ]; then
@@ -28,7 +29,11 @@ else
   echo "Repository already exists. Pulling latest changes."
   cd $ANSIBLE_DIR
   git pull origin main
+  cd .. # go back to the base directory
 fi
+
+#enter the sepcific repo folder befor running the playbook
+cd $ANSIBLE_DIR
 
 # Run the Ansible playbook
 ansible-playbook -e component=${component} -e env=${environment} main.yaml &>> /var/log/roboshop/ansible.log 
