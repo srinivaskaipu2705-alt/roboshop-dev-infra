@@ -19,7 +19,7 @@ mkdir -p $REPO_DIR
 mkdir -p /var/log/roboshop/
 touch ansible.log
 
-cd $REPO_DIR
+cd $REPO_DIR/$ANSIBLE_DIR
 
 # check if the repository is already cloned
 if [ ! -d "$ANSIBLE_DIR" ]; then
