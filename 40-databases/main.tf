@@ -163,7 +163,7 @@ resource "terraform_data" "mysql" {
     provisioner "remote-exec" {
       inline = [ 
         "chmod +x /tmp/bootstrap.sh",
-        "sudo sh -x /tmp/bootstrap.sh mysql dev" #_-x is used to print the commands being executed, which is helpful for debugging
+        "sudo sh -x /tmp/bootstrap.sh mysql dev ${var.environment}" #_-x is used to print the commands being executed, which is helpful for debugging
        ]
     }
   
@@ -175,7 +175,6 @@ resource "aws_route53_record" "mongodb" {
   type    = "A"
   ttl     = 1
   records = [aws_instance.mongodb.private_ip]
-  allow_overwrite = true
 }
 
 resource "aws_route53_record" "redis" {
