@@ -37,7 +37,7 @@ REPO_URL=https://github.com/srinivaskaipu2705-alt/ansible-roboshop-roles-tf.git
 
 # ... existing variable definitions ...
 REPO_DIR="/opt/roboshop/ansible"
-
+rm -rf $REPO_DIR
 # 1. Ensure the directory exists
 mkdir -p $REPO_DIR
 
