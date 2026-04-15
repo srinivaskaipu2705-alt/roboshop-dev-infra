@@ -65,7 +65,7 @@ resource "aws_lb_listner_rule" "catalogue" {
 
   condition {
     host_header {
-      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"] # catalogue.backend-alb-{environment}.roboshop.com
+      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"] # catalogue.backend-alb-{environment}.srini.store
     }
   }
 }
