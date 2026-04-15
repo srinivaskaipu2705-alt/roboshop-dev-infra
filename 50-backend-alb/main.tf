@@ -41,8 +41,8 @@ resource "aws_route53_record" "backend_alb" {
 
   alias {
     # this are ALB details,not our domain details, we are pointing our domain to ALB DNS name and zone id
-    name = aws_elb.backend_alb.dns_name # ALB DNS name
-    zone_id = aws_elb.backend_alb.zone_id
+    name = aws_lb.backend_alb.dns_name # ALB DNS name
+    zone_id = aws_lb.backend_alb.zone_id
     evaluate_target_health = true
   }
 }
