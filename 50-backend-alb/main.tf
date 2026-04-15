@@ -46,3 +46,26 @@ resource "aws_route53_record" "backend_alb" {
     evaluate_target_health = true
   }
 }
+
+# aws lb listner rule
+resource "aws_lb_listner_rule" "catalogue" {
+  listner_arn = aws_alb_listener.backend_alb_listener.arn
+  priority = 100
+
+  action {
+    type = "forward"
+    target_group_arn = aws_lb_target_group.static.arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/static/*"]
+    }
+  }
+
+  condition {
+    host_header {
+      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"] # catalogue.backend-alb-{environment}.roboshop.com
+    }
+  }
+}
