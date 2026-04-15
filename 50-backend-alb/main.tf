@@ -18,7 +18,7 @@ resource "aws_alb" "backend_alb" {
 }
 
 # backend alb listening on port 80
-resource "aws_alb_listener" "backend_alb_listener" {
+resource "aws_lb_listener" "backend_alb" {
   load_balancer_arn = aws_alb.backend_alb.arn
   port              = "80"
   protocol          = "HTTP"
@@ -47,25 +47,3 @@ resource "aws_route53_record" "backend_alb" {
   }
 }
 
-# aws lb listner rule
-resource "aws_lb_listner_rule" "catalogue" {
-  listner_arn = aws_alb_listener.backend_alb_listener.arn
-  priority = 100
-
-  action {
-    type = "forward"
-    target_group_arn = aws_lb_target_group.static.arn
-  }
-
-  condition {
-    path_pattern {
-      values = ["/static/*"]
-    }
-  }
-
-  condition {
-    host_header {
-      values = ["catalogue.backend-alb-${var.environment}.${var.domain_name}"] # catalogue.backend-alb-{environment}.srini.store
-    }
-  }
-}
