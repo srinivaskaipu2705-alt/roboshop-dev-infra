@@ -54,4 +54,4 @@ fi
 
 # 3. Run the Ansible playbook from the correct root
 cd $REPO_DIR
-ansible-playbook -e component=${component} -e env=${environment} main.yaml >> /var/log/roboshop/ansible.log
+ansible-playbook -e component=${component} -e env=${environment} main.yaml
