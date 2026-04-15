@@ -1,4 +1,4 @@
-resource "aws_alb" "backend_alb" {
+resource "aws_lb" "backend_alb" {
   name               = "${local.common_name_suffix}-backend-alb" # roboshop-dev-backend-alb
   internal           = true
   load_balancer_type = "application"
@@ -19,7 +19,7 @@ resource "aws_alb" "backend_alb" {
 
 # backend alb listening on port 80
 resource "aws_lb_listener" "backend_alb" {
-  load_balancer_arn = aws_alb.backend_alb.arn
+  load_balancer_arn = aws_lb.backend_alb.arn
   port              = "80"
   protocol          = "HTTP"
 
