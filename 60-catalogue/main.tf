@@ -96,7 +96,8 @@ resource "aws_launch_template" "catalogue" {
     vpc_security_group_ids = [local.catalogue_sg_id]
     # key_name = "roboshop-dev-key" # replace with your key pair name
     # user_data = file("catalogue.sh")
-
+    #when we run terraform apply again , a new version will be created with the same launch template name and latest version will be updated to new version, so we need to update the auto scaling group to use latest version of launch template, otherwise it will continue to use the old version of launch template and we will not get the benefits of new AMI image created with latest code changes, so we need to set update_default_version to true to update the auto scaling group to use latest version of launch template.
+    update_default_version = true
 
     #tags attached to the instance created by the launch template
     tag_specifications {
@@ -144,6 +145,15 @@ resource "aws_autoscaling_group" "catalogue" {
     }
     vpc_zone_identifier = local.private_subnet_ids
     target_group_arns = [aws_lb_target_group.catalogue.arn]
+
+    instance_refresh {
+        strategy = "Rolling"
+        preferences {
+            min_healthy_percentage = 50 # atleast 50% of the instances should be up and running.
+        }
+        triggers = ["launch_template"]
+    }
+
     dynamic "tag" { #we will get the iterator with name as value
       for_each = merge(
         local.common_tags,
