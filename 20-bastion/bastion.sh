@@ -4,8 +4,16 @@
 growpart /dev/nvme0n1 4
 lvextend -L +30G /dev/mapper/RootVG-homeVol
 xfs_growfs /home
+#sudo lvreduce -r -L 6G /dev/mapper/RootVG-rootVol
 
 # This script is used to bootstrap the databases module of the roboshop-dev-infra Terraform code. It is executed by Terraform as a provisioner after the database instances are created.
  sudo yum install -y yum-utils
  sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/RHEL/hashicorp.repo
  sudo yum -y install terraform
+
+# creating databases
+cd /home/ec2-user
+git clone https://github.com/srinivaskaipu2705-alt/roboshop-dev-infra.git
+cd roboshop-dev-infra/40-databases
+terraform init
+terraform apply -auto-approve
