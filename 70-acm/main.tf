@@ -22,7 +22,7 @@ resource "aws_route53_record" "roboshop" {
     for dvo in aws_acm_certificate.roboshop.domain_validation_options : dvo.domain_name => {
       name = dvo.resource_record_name
       type = dvo.resource_record_type
-      value = dvo.resource_record_value
+      record = dvo.resource_record_value
     }
   }
 
