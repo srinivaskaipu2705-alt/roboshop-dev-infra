@@ -8,5 +8,5 @@ module "components" {
     for_each = var.components
     source = "git::https://github.com/srinivaskaipu2705-alt/terraform-roboshop-component.git?ref=main"
     component = each.key
-    rule_priority = var.value.rule_priority
+    rule_priority = each.value.rule_priority
 }
